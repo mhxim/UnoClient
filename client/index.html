@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="./pkg/services/api_service.js"></script>
+        <script src="./pkg/spielen/spielen.js"></script>
+        <title>UNO Client</title>
+        <link rel="stylesheet" href="./pkg/public/style.css">
+    </head>
+    <body>
+        <header>
+            <p class="headerTitle">UNO Client</p>
+            <div>
+                <ul>
+                    <li><a>Game</a></li>
+                    <li><a>About</a></li>
+                </ul>
+            </div>
+        </header>
+        <main>
+            <button id="btnSpielStarten">Start</button>
+            <button id="btnSpielZuruecksetzen">Zuruecksetzen</button>
+            <section>
+                <p>Current Card</p>
+                <div id="currentCardDiv">
+                    
+                </div>
+            </section>
+            <section>
+                <p>My Cards</p>
+                <div id="myCardsDiv">
+    
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2021 Maxim Hüsler</p>
+        </footer>
+    </body>
+    <script src="cmd/code.js"></script>
+</html>
