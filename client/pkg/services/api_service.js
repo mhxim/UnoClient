@@ -1,7 +1,6 @@
 class ApiService {
     GAME_API_URI;
     GAME_SESSION_ID;
-    test;
 
     apiFunction = {
         LOGIN: 'anmelden',
