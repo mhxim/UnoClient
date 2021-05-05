@@ -1,5 +1,5 @@
 class Numbercard{
-    played = 0;
+    unavailable = 0;
     0 = 1;
     1 = 2;
     2 = 2;
@@ -14,69 +14,73 @@ class Numbercard{
 
 class LogikService {
     TOTAL_CARD_AMOUNT = 108;
-    NUMBER_CARDS_PER_COLOR = this.TOTAL_CARD_AMOUNT/4;
-    NUMBER_CARDs
-    totalCardsLeft = 108;
-    numberCardsLeft = 76;
-    actionCardsLeft = 24;
-    wildCardsLeft = 8;
+    TOTAL_NUMBER_CARDS = 76;
+    TOTAL_ACTION_CARDS = 24;
+    TOTAL_WILD_CARDS = 8;
+    NUMBER_CARDS_PER_COLOR = this.TOTAL_NUMBER_CARDS/4;
+    greenCards = new Numbercard();
+    redCards = new Numbercard();
+    yellowCards = new Numbercard();
+    blueCards = new Numbercard();
+    
     playedCards = [];
     myCards = [];
 
-    addmyCard = ((myCard) => {
-        this.myCards.push(myCard);
-        this.updateLeftCards(myCard);
+    addMyCard = ((cardToAdd) => {
+        this.myCards.push(cardToAdd);
+        this.adjustCardData(cardToAdd);
     });
-
+    
+    removeMyCard = ((cardToRemove) => {
+        gameCards
+            .splice(
+                gameCards
+                .findIndex(card => 
+                    card.farbe == cardToRemove.farbe
+                    && card.zahl == cardToRemove.zahl)
+                , 1);
+    });
+    
     addPlayedCard = ((playedCard) => {
         this.playedCards.push(playedCard);
-        this.updateLeftCards(playedCard);
+        this.adjustCardData(playedCard);
     });
 
-    updateLeftCards = ((playedCard) => {
-        this.totalCardsLeft--;
-        //TODO CHECK CARD TYPE
-        // switch(this.playedCard.type) {
-        //     case 'action': 
-        //         break;
-        // }
+    adjustCardData = ((card) => {
+        switch(card.farbe) {
+            case 'gruen': this.greenCards.unavailable++; this.greenCards[card.zahl]--; break;
+            case 'rot': this.redCards.unavailable++; this.redCards[card.zahl]--; break;
+            case 'gelb': this.yellowCards.unavailable++; this.yellowCards[card.zahl]--; break;
+            case 'blau': this.blueCards.unavailable++; this.blueCards[card.zahl]--; break;
+        }
     });
 
     findPossibleCard = ((actualColor, actualNumber) => {
         let _possibleCards = [];
         myCards.forEach((card) => {
             if(card.farbe == actualColor 
-                || card.zahl == actualNumber) _possibleCards.push(card);
+                || card.zahl == actualNumber 
+                || card.farbe == actualColor 
+                    && card.actualNumber >= 10) _possibleCards.push(card);
+            if(card.actualNumber == 13) { card.farbe = "gruen"; _possibleCards.push(card); }
         });
+        console.log(_possibleCards)
         return _possibleCards;
     });
 
     findOptimalCard = ((actualColor, actualNumber) => {
         let _possibleCards = this.findPossibleCard(actualColor, actualNumber);
-        let _greenCards = new Numbercard();
-        let _redCards = new Numbercard();
-        let _yellowCards = new Numbercard();
-        let _blueCards = new Numbercard();
         let _myNumbers = [];
 
         this.myCards.forEach((myCard) => {
             _myNumbers.push(myCard.zahl);
         });
 
-        this.playedCards.forEach((playedCard) => {
-            switch(playedCard.farbe) {
-                case 'gruen': _greenCards.played++; _greenCards[playedCard.zahl]--; break;
-                case 'rot': _redCards.played++; _redCards[playedCard.zahl]--; break;
-                case 'gelb': _yellowCards.played++; _yellowCards[playedCard.zahl]--; break;
-                case 'blau': _blueCards.played++; _blueCards[playedCard.zahl]--; break;
-            }
-        });
-
         let _probabilityNumberCards = {
-            green: (_greenCards.played/this.NUMBER_CARDS_PER_COLOR)*100,
-            red: (_redCards.played/this.NUMBER_CARDS_PER_COLOR)*100,
-            yellow: (_yellowCards.played/this.NUMBER_CARDS_PER_COLOR)*100,
-            blue: (_blueCards.played/this.NUMBER_CARDS_PER_COLOR)*100,
+            green: ((this.NUMBER_CARDS_PER_COLOR - _greenCards.unavailable)/this.NUMBER_CARDS_PER_COLOR)*100,
+            red: ((this.NUMBER_CARDS_PER_COLOR - _redCards.unavailable)/this.NUMBER_CARDS_PER_COLOR)*100,
+            yellow: ((this.NUMBER_CARDS_PER_COLOR - _yellowCards.unavailable)/this.NUMBER_CARDS_PER_COLOR)*100,
+            blue: ((this.NUMBER_CARDS_PER_COLOR - _blueCards.unavailable)/this.NUMBER_CARDS_PER_COLOR)*100,
         };
     });
 }

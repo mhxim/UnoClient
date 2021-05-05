@@ -4,6 +4,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="./pkg/services/api_service.js"></script>
+        <script src="./pkg/services/logik_service.js"></script>
         <script src="./pkg/spielen/spielen.js"></script>
         <title>UNO Client</title>
         <link rel="stylesheet" href="./pkg/public/style.css">
@@ -19,6 +20,26 @@
             </div>
         </header>
         <main>
+            <label for="selectAPI">Select API:</label>
+            <select name="selectAPI" id="selectAPI">
+                <option value="UNOA">UNO A</option>
+                <option value="UNOB">UNO B</option>
+                <option value="UNOC">UNO C</option>
+            </select>
+            <br>
+            <label for="setInterval">Set Interval:</label>
+            <input name="setInterval" type="number" id="setInterval" value="3000" min="500">
+            <button id="btnIntervalSetzen">Interval setzen</button>
+            <br>
+            <label for="selectPlayer">Select Player:</label>
+            <select name="selectPlayer" id="selectPlayer">
+                <option value="1">Maxim</option>
+                <option value="2">Nicolas</option>
+                <option value="3">Jonas</option>
+                <option value="4">Daniel</option>
+                <option value="5">Herr Steiner</option>
+            </select>
+            <br>
             <button id="btnSpielStarten">Start</button>
             <button id="btnSpielZuruecksetzen">Zuruecksetzen</button>
             <section>
